@@ -20,12 +20,15 @@ services:
         fromDatabase:
           name: openremote-postgres
           property: connectionString
+      - key: IDENTITY_PROVIDER_URL
+        value: https://openremote-keycloak.onrender.com/auth
 
   - type: web
     name: openremote-keycloak
     env: docker
-    dockerfilePath: ./deployment/keycloak/Dockerfile
+    dockerImage: quay.io/keycloak/keycloak:22.0
     plan: starter
+    dockerCommand: start --optimized
     envVars:
       - key: KEYCLOAK_ADMIN
         value: admin
@@ -39,9 +42,12 @@ services:
           property: connectionString
       - key: KC_HOSTNAME
         value: openremote-keycloak.onrender.com
+      - key: KC_HTTP_ENABLED
+        value: "true"
+      - key: KC_HOSTNAME_STRICT_HTTPS
+        value: "false"
 
 databases:
   - name: openremote-postgres
     databaseName: openremote
-    user: postgres
     plan: starter
