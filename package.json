@@ -8,6 +8,10 @@
     "ui/component/*",
     "ui/demo/*"
   ],
+  "scripts": {
+    "build": "./build-vercel.sh",
+    "build:manager": "cd ui/app/manager && yarn run modelBuild && yarn run build"
+  },
   "devDependencies": {
     "@openremote/util": "workspace:*"
   }

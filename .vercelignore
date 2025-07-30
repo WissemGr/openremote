@@ -1,0 +1,69 @@
+# Ignore build artifacts and development files
+node_modules/
+*.log
+*.tgz
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+*.gradle
+
+# Ignore Docker and Kubernetes files
+docker-compose.yml
+Dockerfile*
+kubernetes/
+balena/
+deployment/
+
+# Ignore test and development files
+test/
+*.test.*
+*.spec.*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore documentation and metadata
+README.md
+CONTRIBUTORS.txt
+LICENSE.txt
+SECURITY.md
+*.md
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Keep only necessary UI parts
+agent/
+container/
+manager/src/
+model/src/
+setup/
+tools/
+
+# Keep essential UI files but ignore built artifacts
+ui/component/*/dist/
+ui/component/*/lib/
+ui/app/*/dist/
+ui/app/*/lib/
+ui/demo/
+
+# Ignore version control
+.git/
+.gitignore
