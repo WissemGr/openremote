@@ -1,0 +1,35 @@
+# Simplified Render configuration - Manager only (no Keycloak)
+# This deploys only the OpenRemote Manager with embedded authentication
+
+services:
+  - type: web
+    name: openremote-manager
+    env: docker
+    dockerfilePath: ./manager/Dockerfile
+    plan: starter
+    healthCheckPath: /api/master/info
+    envVars:
+      - key: OR_HOSTNAME
+        sync: false
+      - key: OR_SSL_PORT
+        value: "443"
+      - key: OR_DEV_MODE
+        value: "false"
+      - key: SETUP_ADMIN_PASSWORD
+        value: admin
+      - key: SETUP_WIPE_CLEAN_INSTALL
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: openremote-postgres
+          property: connectionString
+      # Disable external Keycloak and use basic auth
+      - key: IDENTITY_PROVIDER
+        value: basic
+      - key: SETUP_KEYCLOAK_HOST
+        value: ""
+
+databases:
+  - name: openremote-postgres
+    databaseName: openremote
+    plan: starter

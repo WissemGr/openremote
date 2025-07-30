@@ -26,7 +26,7 @@ services:
   - type: web
     name: openremote-keycloak
     env: docker
-    dockerImage: quay.io/keycloak/keycloak:22.0
+    dockerfilePath: ./deployment/keycloak/Dockerfile
     plan: starter
     dockerCommand: start --optimized
     envVars:

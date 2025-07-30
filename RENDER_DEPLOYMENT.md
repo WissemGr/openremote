@@ -2,7 +2,8 @@
 
 ## Fixed Issues
 ✅ Removed invalid `user` field from database configuration  
-✅ Updated Keycloak service to use official Docker image  
+✅ Fixed `dockerImage` field - replaced with `dockerfilePath`  
+✅ Created Keycloak Dockerfile for proper deployment  
 ✅ Added proper environment variables  
 
 ## Deployment Options
@@ -10,7 +11,10 @@
 ### Option 1: Full Stack (render.yaml)
 Deploys both OpenRemote Manager and Keycloak together.
 
-### Option 2: Backend Only (render-backend-only.yaml)
+### Option 2: Simple Manager Only (render-simple.yaml)
+Deploys only the OpenRemote Manager with basic authentication (no Keycloak).
+
+### Option 3: Backend Only (render-backend-only.yaml)
 Deploys only the OpenRemote Manager backend. You can deploy the frontend separately on Vercel.
 
 ## Steps to Deploy
