@@ -1,0 +1,56 @@
+# fly.toml app configuration file generated for openremote on 2025-07-30T10:30:00Z
+app = "openremote"
+primary_region = "fra"
+
+[build]
+  dockerfile = "manager/Dockerfile"
+
+[env]
+  OR_DEV_MODE = "false"
+  SETUP_WIPE_CLEAN_INSTALL = "true"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/api/master/info"
+
+[processes]
+  app = ""
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [[services.http_checks]]
+    interval = "30s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/api/master/info"
+    timeout = "5s"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 2
+  memory_mb = 2048

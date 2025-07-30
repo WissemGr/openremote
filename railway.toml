@@ -1,0 +1,46 @@
+[build]
+builder = "DOCKER"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/api/master/info"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+[[services]]
+name = "openremote-manager"
+source = "."
+dockerfilePath = "manager/Dockerfile"
+
+[services.healthcheck]
+path = "/api/master/info"
+timeout = 300
+
+[services.variables]
+OR_HOSTNAME = "${{RAILWAY_PUBLIC_DOMAIN}}"
+OR_SSL_PORT = "443"
+OR_DEV_MODE = "false"
+SETUP_ADMIN_PASSWORD = "admin"
+SETUP_WIPE_CLEAN_INSTALL = "true"
+
+[[services]]
+name = "openremote-keycloak"  
+source = "."
+dockerfilePath = "deployment/keycloak/Dockerfile"
+
+[services.variables]
+KEYCLOAK_ADMIN = "admin"
+KEYCLOAK_ADMIN_PASSWORD = "admin"
+KC_DB = "postgres"
+KC_DB_URL = "${{DATABASE_URL}}"
+KC_HOSTNAME = "${{RAILWAY_PUBLIC_DOMAIN}}"
+
+[[services]]
+name = "postgresql"
+source = "postgres:13-alpine"
+
+[services.variables]
+POSTGRES_DB = "openremote"
+POSTGRES_USER = "postgres" 
+POSTGRES_PASSWORD = "${{POSTGRES_PASSWORD}}"
